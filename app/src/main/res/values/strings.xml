@@ -8,4 +8,9 @@
     <string name="action_restore">Restore Lists</string>
     <string name="action_new_list">New List</string>
     <string name="action_remove_list">Remove List</string>
+    <string name="title_activity_create_new_list">CreateNewList</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_new_item">CreateNewItem</string>
+    <string name="title_activity_check_list">CheckList</string>
+
 </resources>

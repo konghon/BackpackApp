@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.konghon.backpackapp.CreateNewList"
+            android:label="@string/title_activity_create_new_list" >
+        </activity>
+        <activity
+            android:name="com.example.konghon.backpackapp.CreateNewItem"
+            android:label="@string/title_activity_create_new_item" >
+        </activity>
+        <activity
+            android:name="com.example.konghon.backpackapp.CheckList"
+            android:label="@string/title_activity_check_list" >
+        </activity>
     </application>
 
 </manifest>
