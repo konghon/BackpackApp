@@ -4,8 +4,8 @@
     <string name="app_name">BackpackApp</string>
     <string name="list_string">Lists</string>
     <string name="action_settings">Settings</string>
-    <string name="action_backup">Backup List</string>
-    <string name="action_restore">Restore List</string>
+    <string name="action_backup">Backup Lists</string>
+    <string name="action_restore">Restore Lists</string>
     <string name="action_new_list">New List</string>
-
+    <string name="action_remove_list">Remove List</string>
 </resources>

@@ -11,7 +11,8 @@ public class Databasehandler extends SQLiteOpenHelper
 {
     private static final int DATABASE_VERSION = 1; 				// Database Version
     private static final String DATABASE_NAME = "Backpack"; 	// Database Name
-    private static final String TABLE_MESSAGES = "messages";	// Contacts table name
+    private static final String TABLE_ITEMS = "items";	// Items table name
+    private static final String TABLE_LIST = "lists";   //Lists tablename
 
     public Databasehandler(Context context)
     {
@@ -20,6 +21,7 @@ public class Databasehandler extends SQLiteOpenHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
     }
 
     @Override
