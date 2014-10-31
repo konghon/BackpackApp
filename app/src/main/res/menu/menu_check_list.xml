@@ -3,4 +3,16 @@
     tools:context="com.example.konghon.backpackapp.CheckList">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" />
+
+    <item android:id="@+id/action_new_item"
+        android:icon="@drawable/ic_action_new_event_white"
+        android:title="@string/action_new_list"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_remove_item"
+        android:icon="@drawable/ic_action_remove_event_white"
+        android:title="@string/action_remove_list"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom" />
 </menu>

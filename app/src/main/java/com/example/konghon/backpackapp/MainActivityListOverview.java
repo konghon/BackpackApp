@@ -2,6 +2,7 @@ package com.example.konghon.backpackapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +50,8 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            Intent i = new Intent(this, CreateNewList.class);
+            startActivity(i);
             return true;
         }
 
@@ -72,7 +75,7 @@ public class MainActivityListOverview extends Activity {
             return true;
         }
 
-        if (id == R.id.action_restore) {
+        /*if (id == R.id.action_restore) {
             Context context = getApplicationContext();
             CharSequence text = "Restoring lists";
             int duration = Toast.LENGTH_SHORT;
@@ -80,7 +83,7 @@ public class MainActivityListOverview extends Activity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
