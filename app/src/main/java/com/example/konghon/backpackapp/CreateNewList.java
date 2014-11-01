@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class CreateNewList extends Activity {
@@ -12,6 +15,14 @@ public class CreateNewList extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_list);
+        final Databasehandler db = new Databasehandler(this);
+
+        findViewById(R.id.buttonCreateNewList).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.addNewList(((EditText)findViewById(R.id.editText)).getText().toString(),((EditText)findViewById(R.id.editText2)).getText().toString());
+            }
+        });
     }
 
 
@@ -20,6 +31,8 @@ public class CreateNewList extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_create_new_list, menu);
         return true;
+
+
     }
 
     @Override
@@ -36,4 +49,7 @@ public class CreateNewList extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

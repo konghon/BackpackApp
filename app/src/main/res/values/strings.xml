@@ -33,5 +33,6 @@
     <string name="title_activity_check_list">CheckList</string>
     <string name="item_item_description_hint">item description</string>
     <string name="item_item_name_hint">Enter the name of the item</string>
+    <string name="list_newlist">Create New List</string>
 
 </resources>

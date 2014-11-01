@@ -4,17 +4,32 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivityListOverview extends Activity {
+    private Databasehandler databasehandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity_list_overview);
+        databasehandler = new Databasehandler(this);
+        UpdateList();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        UpdateList();
     }
 
 
@@ -62,6 +77,7 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            databasehandler.dumpToLogCat();
             return true;
         }
 
@@ -72,19 +88,36 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            databasehandler.addNewList("lol", "nyancat");
             return true;
         }
 
-        /*if (id == R.id.action_restore) {
+        if (id == R.id.action_remove_list) {
             Context context = getApplicationContext();
-            CharSequence text = "Restoring lists";
+            CharSequence text = "Removing lists";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void UpdateList()
+    {
+        ListView listView1 = (ListView) findViewById(R.id.listView);
+        List<String> lists = new ArrayList<String>();
+        List<ListMetaData> datalist = databasehandler.getList();
+        Log.d("dbughsize", Integer.toString(datalist.size()));
+        for(int i = 0; i < datalist.size(); i++)
+        {
+            lists.add(datalist.get(i).Name);
+            Log.d("dbugname", datalist.get(i).Name);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, lists);
+        listView1.setAdapter(adapter);
     }
 }
