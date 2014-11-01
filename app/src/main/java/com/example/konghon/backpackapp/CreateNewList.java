@@ -1,6 +1,7 @@
 package com.example.konghon.backpackapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,13 @@ public class CreateNewList extends Activity {
         findViewById(R.id.buttonCreateNewList).setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.addNewList(((EditText)findViewById(R.id.editText)).getText().toString(),((EditText)findViewById(R.id.editText2)).getText().toString());
+                if(!((EditText)findViewById(R.id.editText)).getText().toString().contentEquals(""))
+                {
+                    db.addNewList(((EditText)findViewById(R.id.editText)).getText().toString(),((EditText)findViewById(R.id.editText2)).getText().toString());
+                    finish();
+                }
+                else {Toast toast = Toast.makeText(getApplicationContext(), "Fill in a name", Toast.LENGTH_SHORT);
+                toast.show();}
             }
         });
     }
