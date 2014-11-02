@@ -41,7 +41,7 @@ public class CreateNewItem extends Activity {
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         // creating pending intent:
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -56,7 +56,7 @@ public class CreateNewItem extends Activity {
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         // disabling foreground dispatch:
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
