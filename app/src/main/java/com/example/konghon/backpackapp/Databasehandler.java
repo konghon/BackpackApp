@@ -27,11 +27,21 @@ public class Databasehandler extends SQLiteOpenHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //query to make list Table
         String CREATE_LIST_TABLE = "CREATE TABLE " +TABLE_LIST + "(" +
                 "UID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "NAME TEXT," +
                 "DESCRIPTION TEXT)";
+
+        //query to make item table
+        String CREATE_ITEM_TABLE = "CREATE TABLE "+ TABLE_ITEMS + "(" +
+                "UID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                "NAME TEXT," +
+                "DESCRIPTION TEXT," +
+                "NFCTAGID TEXT" +
+                "LIST INTEGER";
         db.execSQL(CREATE_LIST_TABLE);
+        db.execSQL(CREATE_ITEM_TABLE);
 
 
 
@@ -52,6 +62,15 @@ public class Databasehandler extends SQLiteOpenHelper
         values.put("DESCRIPTION", description);
         db.insert(TABLE_LIST, null, values);
         db.close();
+    }
+
+    public void addNewItem(String name, String description, String nfcId, int listId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("NAME", name);
+
     }
 
     public void dumpToLogCat()
@@ -94,5 +113,7 @@ public class Databasehandler extends SQLiteOpenHelper
         }
         return lists;
     }
+
+
 
 }
