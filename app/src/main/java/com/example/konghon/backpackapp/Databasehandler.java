@@ -13,46 +13,43 @@ import java.util.List;
 /**
  * Created by Konghon on 31/10/2014.
  */
-public class Databasehandler extends SQLiteOpenHelper
-{
-    private static final int DATABASE_VERSION = 1; 				// Database Version
-    private static final String DATABASE_NAME = "Backpack"; 	// Database Name
-    private static final String TABLE_ITEMS = "items";	// Items table name
+public class Databasehandler extends SQLiteOpenHelper {
+    private static final int DATABASE_VERSION = 1;                // Database Version
+    private static final String DATABASE_NAME = "Backpack";    // Database Name
+    private static final String TABLE_ITEMS = "items";    // Items table name
     private static final String TABLE_LIST = "lists";   //Lists tablename
 
-    public Databasehandler(Context context)
-    {
+    public Databasehandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //query to make list Table
-        String CREATE_LIST_TABLE = "CREATE TABLE " +TABLE_LIST + "(" +
+        String CREATE_LIST_TABLE = "CREATE TABLE " + TABLE_LIST + "(" +
                 "UID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "NAME TEXT," +
                 "DESCRIPTION TEXT)";
 
         //query to make item table
-        String CREATE_ITEM_TABLE = "CREATE TABLE "+ TABLE_ITEMS + "(" +
+        String CREATE_ITEM_TABLE = "CREATE TABLE " + TABLE_ITEMS + "(" +
                 "UID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "NAME TEXT," +
                 "DESCRIPTION TEXT," +
-                "NFCTAGID TEXT" +
-                "LIST INTEGER";
+                "NFCTAGID TEXT," +
+                "LIST INTEGER)";
         db.execSQL(CREATE_LIST_TABLE);
         db.execSQL(CREATE_ITEM_TABLE);
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXIST " + TABLE_LIST);
         onCreate(db);
     }
 
-    public void addNewList(String name, String description)
-    {
+    public void addNewList(String name, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -62,8 +59,7 @@ public class Databasehandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public void addNewItem(String name, String description, String nfcId, int listId)
-    {
+    public void addNewItem(String name, String description, String nfcId, int listId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -75,8 +71,7 @@ public class Databasehandler extends SQLiteOpenHelper
         db.close();
     }
 
-    public void dumpToLogCat()
-    {
+    public void dumpToLogCat() {
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_LIST;
 
@@ -89,23 +84,20 @@ public class Databasehandler extends SQLiteOpenHelper
             Log.d("sqlite", Integer.toString(columnCount));
 
             do {
-                for(int i = 0; i < columnCount; i++)
-                {
-                    Log.d("sqlite" , cursor.getColumnName(i) + " --> " + cursor.getString(i));
+                for (int i = 0; i < columnCount; i++) {
+                    Log.d("sqlite", cursor.getColumnName(i) + " --> " + cursor.getString(i));
                 }
                 Log.i("sqlite", "===================================");
             } while (cursor.moveToNext());
         }
     }
 
-    public List<ListMetaData> getList()
-    {
+    public List<ListMetaData> getList() {
         String selectQuery = "SELECT  * FROM " + TABLE_LIST;
         List<ListMetaData> lists = new ArrayList<ListMetaData>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            int columnCount = cursor.getColumnCount();
             //Log.d("sqlite", Integer.toString(columnCount));
 
             do {
@@ -116,6 +108,17 @@ public class Databasehandler extends SQLiteOpenHelper
         return lists;
     }
 
+    public List<ItemMetaData> getItems() {
+        String selectQuery = "SELECT  * FROM " + TABLE_ITEMS;
+        List<ItemMetaData> items = new ArrayList<ItemMetaData>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+
+        }
+
+        return items;
+    }
 
 
 }
