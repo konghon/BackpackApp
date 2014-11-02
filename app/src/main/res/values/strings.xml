@@ -34,5 +34,6 @@
     <string name="item_item_description_hint">item description</string>
     <string name="item_item_name_hint">Enter the name of the item</string>
     <string name="list_newlist">Create New List</string>
+    <string name="checklist_item">Items</string>
 
 </resources>
