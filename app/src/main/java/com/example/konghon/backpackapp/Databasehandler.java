@@ -43,8 +43,6 @@ public class Databasehandler extends SQLiteOpenHelper
         db.execSQL(CREATE_LIST_TABLE);
         db.execSQL(CREATE_ITEM_TABLE);
 
-
-
     }
 
     @Override
@@ -70,7 +68,11 @@ public class Databasehandler extends SQLiteOpenHelper
 
         ContentValues values = new ContentValues();
         values.put("NAME", name);
-
+        values.put("DESCRIPTION", description);
+        values.put("NFCTAGID", nfcId);
+        values.put("LIST", listId);
+        db.insert(TABLE_ITEMS, null, values);
+        db.close();
     }
 
     public void dumpToLogCat()

@@ -1,9 +1,11 @@
 package com.example.konghon.backpackapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class CheckList extends Activity {
@@ -31,6 +33,18 @@ public class CheckList extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_new_item) {
+            Toast toast = Toast.makeText(getApplicationContext(), "New Item", Toast.LENGTH_SHORT);
+            toast.show();
+            Intent i = new Intent(this, CreateNewItem.class);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_remove_item) {
             return true;
         }
 

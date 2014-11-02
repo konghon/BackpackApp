@@ -99,6 +99,8 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            Intent i = new Intent(this, CheckList.class);
+            startActivity(i);
             return true;
         }
 
