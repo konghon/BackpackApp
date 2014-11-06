@@ -19,6 +19,7 @@ import java.util.List;
 
 public class MainActivityListOverview extends Activity {
     private Databasehandler databasehandler;
+    public final static String EXTRA_INT = "com.example.konghon.backpackapp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +120,8 @@ public class MainActivityListOverview extends Activity {
     public void UpdateList()
     {
         ListView listView1 = (ListView) findViewById(R.id.listView);
-        List<String> lists = new ArrayList<String>();
-        List<ListMetaData> datalist = databasehandler.getList();
+        final List<String> lists = new ArrayList<String>();
+        final List<ListMetaData> datalist = databasehandler.getList();
         Log.d("dbughsize", Integer.toString(datalist.size()));
         for(int i = 0; i < datalist.size(); i++)
         {
@@ -133,9 +134,10 @@ public class MainActivityListOverview extends Activity {
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> av, View view, int i, long l) {
-                Toast toast = Toast.makeText(getApplicationContext(), "derp", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), Integer.toString(datalist.get(i).ID), Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getApplication(), CheckList.class);
+                intent.putExtra(EXTRA_INT,datalist.get(i).ID);
                 startActivity(intent);
             }
 

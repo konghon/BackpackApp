@@ -11,12 +11,24 @@ import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CheckList extends Activity {
+
+    private Databasehandler databasehandler;
+    public final static String EXTRA_ID = "com.example.konghon.backpackapp";
+    private int listid = 0;
 
     private final String[][] techList = new String[][] {
             new String[] {
@@ -32,8 +44,19 @@ public class CheckList extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+
+        //recieving intent
+        Intent intent = getIntent();
+        listid = intent.getIntExtra(MainActivityListOverview.EXTRA_INT,0);
+
+        //update list
+        UpdateList2(listid);
+
+        Toast tostie = Toast.makeText(getApplicationContext(),"id"+listid,Toast.LENGTH_SHORT);
+        tostie.show();
     }
 
 
@@ -60,6 +83,7 @@ public class CheckList extends Activity {
             Toast toast = Toast.makeText(getApplicationContext(), "New Item", Toast.LENGTH_SHORT);
             toast.show();
             Intent i = new Intent(this, CreateNewItem.class);
+            i.putExtra(EXTRA_ID,listid);
             startActivity(i);
             return true;
         }
@@ -70,4 +94,33 @@ public class CheckList extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+    public void UpdateList2(int id)
+    {
+        ListView listView2 = (ListView) findViewById(R.id.listView2);
+        final List<String> lists = new ArrayList<String>();
+        final List<ItemMetaData> datalist = databasehandler.getItems(id);
+        /*Log.d("dbughsize", Integer.toString(datalist.size()));
+        for(int i = 0; i < datalist.size(); i++)
+        {
+            lists.add(datalist.get(i).Name);
+            Log.d("dbugname", datalist.get(i).Name);
+        }*/
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, lists);
+
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+               // Toast toast = Toast.makeText(getApplicationContext(),datalist.get(i).NfcIDTag, Toast.LENGTH_SHORT);
+                //toast.show();
+                //Intent intent = new Intent(getApplication(), CheckList.class);
+                //startActivity(intent);
+            }
+
+
+        });
+        listView2.setAdapter(adapter);
+    }
+
+
 }

@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 public class CreateNewItem extends Activity {
 
+    private int listid;
+
     private final String[][] techList = new String[][]{
             new String[]{
                     NfcA.class.getName(),
@@ -44,6 +46,10 @@ public class CreateNewItem extends Activity {
         //database
         final Databasehandler db = new Databasehandler(this);
 
+        //getid
+        Intent intent = getIntent();
+        listid = intent.getIntExtra(MainActivityListOverview.EXTRA_INT,0);
+
         //button onclick handler
         findViewById(R.id.buttonAddItem).setOnClickListener( new View.OnClickListener() {
             @Override
@@ -53,7 +59,7 @@ public class CreateNewItem extends Activity {
                     String name = ((EditText)findViewById(R.id.editTextName)).getText().toString();
                     String description = ((EditText)findViewById(R.id.editTextDescription)).getText().toString();
                     String nfcTagId = ((TextView)findViewById(R.id.textViewTagId)).getText().toString();
-                    db.addNewItem(name,description,nfcTagId,42);
+                    db.addNewItem(name,description,nfcTagId,listid);
                     finish();
                 }
                 else {Toast toast = Toast.makeText(getApplicationContext(), "Fill in a name and scan the Tag", Toast.LENGTH_SHORT);
