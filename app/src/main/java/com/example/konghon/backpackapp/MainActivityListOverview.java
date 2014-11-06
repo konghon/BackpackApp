@@ -129,6 +129,17 @@ public class MainActivityListOverview extends Activity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, lists);
+
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+                Toast toast = Toast.makeText(getApplicationContext(), "derp", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+
+
+        });
         listView1.setAdapter(adapter);
     }
 }
