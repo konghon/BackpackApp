@@ -104,8 +104,8 @@ public class MainActivityListOverview extends Activity {
             Context context = getApplicationContext();
             CharSequence text = "Removing lists";
             int duration = Toast.LENGTH_SHORT;
-            Intent i = new Intent(this, CheckList.class);
-            startActivity(i);
+           // Intent i = new Intent(this, CheckList.class);
+            //startActivity(i);
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
@@ -135,7 +135,8 @@ public class MainActivityListOverview extends Activity {
             public void onItemClick(AdapterView<?> av, View view, int i, long l) {
                 Toast toast = Toast.makeText(getApplicationContext(), "derp", Toast.LENGTH_SHORT);
                 toast.show();
-
+                Intent intent = new Intent(getApplication(), CheckList.class);
+                startActivity(intent);
             }
 
 
