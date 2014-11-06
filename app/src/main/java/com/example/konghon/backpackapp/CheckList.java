@@ -30,8 +30,8 @@ public class CheckList extends Activity {
     public final static String EXTRA_ID = "com.example.konghon.backpackapp";
     private int listid = 0;
 
-    private final String[][] techList = new String[][] {
-            new String[] {
+    private final String[][] techList = new String[][]{
+            new String[]{
                     NfcA.class.getName(),
                     NfcB.class.getName(),
                     NfcF.class.getName(),
@@ -48,15 +48,24 @@ public class CheckList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
 
+        //enabling database
+        databasehandler = new Databasehandler(this);
+
         //recieving intent
         Intent intent = getIntent();
-        listid = intent.getIntExtra(MainActivityListOverview.EXTRA_INT,0);
+        listid = intent.getIntExtra(MainActivityListOverview.EXTRA_INT, 0);
 
         //update list
         UpdateList2(listid);
 
-        Toast tostie = Toast.makeText(getApplicationContext(),"id"+listid,Toast.LENGTH_SHORT);
+        Toast tostie = Toast.makeText(getApplicationContext(), "id" + listid, Toast.LENGTH_SHORT);
         tostie.show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        UpdateList2(listid);
     }
 
 
@@ -83,7 +92,7 @@ public class CheckList extends Activity {
             Toast toast = Toast.makeText(getApplicationContext(), "New Item", Toast.LENGTH_SHORT);
             toast.show();
             Intent i = new Intent(this, CreateNewItem.class);
-            i.putExtra(EXTRA_ID,listid);
+            i.putExtra(EXTRA_ID, listid);
             startActivity(i);
             return true;
         }
@@ -94,33 +103,32 @@ public class CheckList extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void UpdateList2(int id)
-    {
-        ListView listView2 = (ListView) findViewById(R.id.listView2);
-        final List<String> lists = new ArrayList<String>();
-        final List<ItemMetaData> datalist = databasehandler.getItems(id);
-        /*Log.d("dbughsize", Integer.toString(datalist.size()));
-        for(int i = 0; i < datalist.size(); i++)
-        {
-            lists.add(datalist.get(i).Name);
-            Log.d("dbugname", datalist.get(i).Name);
-        }*/
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, lists);
 
-        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    public void UpdateList2(int id) {
+        ListView listView2 = (ListView) findViewById(R.id.listView2);
+        final List<String> items = new ArrayList<String>();
+        final List<ItemMetaData> dataItems = databasehandler.getItems(id);
+        //Log.d("dbughsize", Integer.toString(datalist.size()));
+        for (int i = 0; i < dataItems.size(); i++) {
+            items.add(dataItems.get(i).Name);
+            Log.d("dbugname", dataItems.get(i).Name);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items);
+
+        /*listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> av, View view, int i, long l) {
-               // Toast toast = Toast.makeText(getApplicationContext(),datalist.get(i).NfcIDTag, Toast.LENGTH_SHORT);
-                //toast.show();
-                //Intent intent = new Intent(getApplication(), CheckList.class);
-                //startActivity(intent);
+                Toast toast = Toast.makeText(getApplicationContext(),datalist.get(i).NfcIDTag, Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(getApplication(), CheckList.class);
+                startActivity(intent);
             }
-
-
-        });
+        });*/
         listView2.setAdapter(adapter);
     }
+
+
 
 
 }

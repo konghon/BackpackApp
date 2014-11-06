@@ -40,7 +40,6 @@ public class CreateNewList extends Activity {
         getMenuInflater().inflate(R.menu.menu_create_new_list, menu);
         return true;
 
-
     }
 
     @Override

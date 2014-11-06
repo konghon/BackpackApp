@@ -77,7 +77,6 @@ public class Databasehandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        getItems(42);
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             int columnCount = cursor.getColumnCount();
@@ -109,20 +108,24 @@ public class Databasehandler extends SQLiteOpenHelper {
     }
 
     public List<ItemMetaData> getItems(int id) {
-        String selectQuery = "SELECT  * FROM " + TABLE_ITEMS + " WHERE LIST="+Integer.toString(id);
+        String selectQuery = "SELECT  * FROM " + TABLE_ITEMS + " WHERE LIST=" + Integer.toString(id);
         List<ItemMetaData> items = new ArrayList<ItemMetaData>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            //Log.d("sqlite", Integer.toString(columnCount));
 
             do {
-                ItemMetaData toAddList = new ItemMetaData(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+                ItemMetaData toAddList = new ItemMetaData(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getInt(4));
                 items.add(toAddList);
             } while (cursor.moveToNext());
         }
         return items;
 
+    }
+
+    public void DeleteLists() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP IF EXISTS " + TABLE_LIST + ";");
     }
 
 

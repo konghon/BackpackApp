@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 public class CreateNewItem extends Activity {
 
-    private int listid;
+    private int listid =1;
 
     private final String[][] techList = new String[][]{
             new String[]{

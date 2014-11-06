@@ -9,7 +9,7 @@ public class ItemMetaData {
     public String Description;
     public int ListID;
 
-    ItemMetaData(String nfcIDTag, String name, String description, int listID){
+    ItemMetaData(String name, String description, String nfcIDTag, int listID){
         NfcIDTag = nfcIDTag;
         Name = name;
         Description = description;

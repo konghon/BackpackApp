@@ -85,7 +85,7 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-            databasehandler.dumpToLogCat();
+            //databasehandler.dumpToLogCat();
             return true;
         }
 
@@ -96,8 +96,8 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-            databasehandler.addNewList("lol", "nyancat");
-            databasehandler.addNewItem("testobject", "een item", "NFCID", 5);
+            /*databasehandler.addNewList("lol", "nyancat");
+            databasehandler.addNewItem("testobject", "een item", "NFCID", 5);*/
             return true;
         }
 
@@ -107,7 +107,8 @@ public class MainActivityListOverview extends Activity {
             int duration = Toast.LENGTH_SHORT;
            // Intent i = new Intent(this, CheckList.class);
             //startActivity(i);
-
+            //databasehandler.DeleteLists();
+            UpdateList();
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
 
@@ -120,24 +121,24 @@ public class MainActivityListOverview extends Activity {
     public void UpdateList()
     {
         ListView listView1 = (ListView) findViewById(R.id.listView);
-        final List<String> lists = new ArrayList<String>();
-        final List<ListMetaData> datalist = databasehandler.getList();
-        Log.d("dbughsize", Integer.toString(datalist.size()));
-        for(int i = 0; i < datalist.size(); i++)
+        final List<String> items = new ArrayList<String>();
+        final List<ListMetaData> dataLists = databasehandler.getList();
+        //Log.d("dbughsize", Integer.toString(dataList.size()));
+        for(int i = 0; i < dataLists.size(); i++)
         {
-            lists.add(datalist.get(i).Name);
-            Log.d("dbugname", datalist.get(i).Name);
+            items.add(dataLists.get(i).Name);
+            Log.d("dbugname", dataLists.get(i).Name);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, lists);
+                android.R.layout.simple_list_item_1, items);
 
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> av, View view, int i, long l) {
-                Toast toast = Toast.makeText(getApplicationContext(), Integer.toString(datalist.get(i).ID), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), Integer.toString(dataLists.get(i).ID), Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getApplication(), CheckList.class);
-                intent.putExtra(EXTRA_INT,datalist.get(i).ID);
+                intent.putExtra(EXTRA_INT,dataLists.get(i).ID);
                 startActivity(intent);
             }
 
