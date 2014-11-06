@@ -73,7 +73,7 @@ public class Databasehandler extends SQLiteOpenHelper {
 
     public void dumpToLogCat() {
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_LIST;
+        String selectQuery = "SELECT  * FROM " + TABLE_ITEMS;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

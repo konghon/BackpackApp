@@ -23,6 +23,7 @@ public class CreateNewList extends Activity {
             public void onClick(View v) {
                 if(!((EditText)findViewById(R.id.editText)).getText().toString().contentEquals(""))
                 {
+
                     db.addNewList(((EditText)findViewById(R.id.editText)).getText().toString(),((EditText)findViewById(R.id.editText2)).getText().toString());
                     finish();
                 }

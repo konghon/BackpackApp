@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,7 +24,11 @@ public class MainActivityListOverview extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity_list_overview);
+
+        //database
         databasehandler = new Databasehandler(this);
+
+        //Update list
         UpdateList();
     }
 
@@ -31,6 +37,7 @@ public class MainActivityListOverview extends Activity {
         super.onResume();
         UpdateList();
     }
+
 
 
     @Override
@@ -89,6 +96,7 @@ public class MainActivityListOverview extends Activity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
             databasehandler.addNewList("lol", "nyancat");
+            databasehandler.addNewItem("testobject", "een item", "NFCID", 5);
             return true;
         }
 
@@ -96,11 +104,12 @@ public class MainActivityListOverview extends Activity {
             Context context = getApplicationContext();
             CharSequence text = "Removing lists";
             int duration = Toast.LENGTH_SHORT;
+            Intent i = new Intent(this, CheckList.class);
+            startActivity(i);
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-            Intent i = new Intent(this, CheckList.class);
-            startActivity(i);
+
             return true;
         }
 

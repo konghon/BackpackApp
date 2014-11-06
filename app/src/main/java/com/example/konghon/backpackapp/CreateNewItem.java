@@ -16,7 +16,10 @@ import android.nfc.tech.NfcV;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CreateNewItem extends Activity {
@@ -37,6 +40,26 @@ public class CreateNewItem extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_item);
+
+        //database
+        final Databasehandler db = new Databasehandler(this);
+
+        //button onclick handler
+        findViewById(R.id.buttonAddItem).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!((EditText)findViewById(R.id.editTextName)).getText().toString().contentEquals("") && !((TextView)findViewById(R.id.textViewTagId)).getText().toString().contentEquals(""))
+                {
+                    String name = ((EditText)findViewById(R.id.editTextName)).getText().toString();
+                    String description = ((EditText)findViewById(R.id.editTextDescription)).getText().toString();
+                    String nfcTagId = ((TextView)findViewById(R.id.textViewTagId)).getText().toString();
+                    db.addNewItem(name,description,nfcTagId,42);
+                    finish();
+                }
+                else {Toast toast = Toast.makeText(getApplicationContext(), "Fill in a name and scan the Tag", Toast.LENGTH_SHORT);
+                    toast.show();}
+            }
+        });
 
     }
 
