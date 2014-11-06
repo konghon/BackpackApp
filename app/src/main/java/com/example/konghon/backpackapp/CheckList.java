@@ -1,7 +1,10 @@
 package com.example.konghon.backpackapp;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
@@ -65,7 +68,28 @@ public class CheckList extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+
+        // creating pending intent:
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        // creating intent receiver for NFC events:
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(NfcAdapter.ACTION_TAG_DISCOVERED);
+        filter.addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filter.addAction(NfcAdapter.ACTION_TECH_DISCOVERED);
+        // enabling foreground dispatch for getting intent from NFC event:
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{filter}, this.techList);
         UpdateList2(listid);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
+            databasehandler.CheckItem(ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)), listid);
+            UpdateList2(listid);
+            //((TextView) findViewById(R.id.textViewTagId)).setText(
+            //     ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
+        }
     }
 
 
@@ -85,6 +109,8 @@ public class CheckList extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            databasehandler.UnCheckAll(listid);
+            UpdateList2(listid);
             return true;
         }
 
@@ -98,6 +124,9 @@ public class CheckList extends Activity {
         }
 
         if (id == R.id.action_remove_item) {
+            //Needs to be implemented
+            databasehandler.DeleteItems(listid);
+            UpdateList2(listid);
             return true;
         }
 
@@ -108,24 +137,40 @@ public class CheckList extends Activity {
         ListView listView2 = (ListView) findViewById(R.id.listView2);
         final List<String> items = new ArrayList<String>();
         final List<ItemMetaData> dataItems = databasehandler.getItems(id);
-        //Log.d("dbughsize", Integer.toString(datalist.size()));
         for (int i = 0; i < dataItems.size(); i++) {
-            items.add(dataItems.get(i).Name);
-            Log.d("dbugname", dataItems.get(i).Name);
+            if (dataItems.get(i).Checked == 0) {
+                items.add(dataItems.get(i).Name + " |Not Checked");
+            } else {
+                items.add(dataItems.get(i).Name + " |Checked");
+            }
+            Log.d("dbugname", Integer.toString(dataItems.get(i).Checked));
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, items);
 
-        /*listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> av, View view, int i, long l) {
-                Toast toast = Toast.makeText(getApplicationContext(),datalist.get(i).NfcIDTag, Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), dataItems.get(i).NfcIDTag, Toast.LENGTH_SHORT);
                 toast.show();
-                Intent intent = new Intent(getApplication(), CheckList.class);
-                startActivity(intent);
             }
-        });*/
+        });
         listView2.setAdapter(adapter);
+    }
+
+    private String ByteArrayToHexString(byte[] inarray) {
+        int i, j, in;
+        String[] hex = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+        String out = "";
+
+        for (j = 0; j < inarray.length; ++j) {
+            in = (int) inarray[j] & 0xff;
+            i = (in >> 4) & 0x0f;
+            out += hex[i];
+            i = in & 0x0f;
+            out += hex[i];
+        }
+        return out;
     }
 
 

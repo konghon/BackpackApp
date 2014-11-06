@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--Shared Strings-->
+    <!-- Shared Strings -->
     <string name="app_name">BackpackApp</string>
     <string name="list_string">Lists</string>
     <string name="action_settings">Settings</string>
 
-    <!--Main Activity-->
+    <!-- Main Activity -->
     <string name="action_backup">Backup Lists</string>
     <string name="action_restore">Restore Lists</string>
     <string name="action_new_list">New List</string>
     <string name="action_remove_list">Remove List</string>
 
-    <!--Checklist Activity-->
+    <!-- Checklist Activity -->
     <string name="action_add_item">Add Item</string>
     <string name="action_remove_item">Remove Items</string>
 
-    <!--create Item-->
+    <!-- create Item -->
     <string name="item_name">Name</string>
     <string name="item_description">Description</string>
     <string name="item_tagID">TagID</string>
     <string name="item_addItem">Add Item</string>
 
-    <!--create List-->
+    <!-- create List -->
     <string name="list_name">Name</string>
     <string name="list_description">Description</string>
     <string name="list_addList">Add List</string>
-
-
     <string name="title_activity_create_new_list">New List</string>
     <string name="title_activity_create_new_item">New Item</string>
     <string name="title_activity_check_list">CheckList</string>
@@ -35,5 +33,13 @@
     <string name="item_item_name_hint">Enter the name of the item</string>
     <string name="list_newlist">Create New List</string>
     <string name="checklist_item">Items</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+   <!-- Setting Activity -->
+    <string name="about_name">Name: </string>
+    <string name="about_age">Age: </string>
+    <string name="about_joindate">Joined: </string>
+    <string name="about_about">About: </string>
+    <string name="about_button">Get Info</string>
 
 </resources>

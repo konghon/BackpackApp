@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by Konghon on 31/10/2014.
+ * does some magic database thingies ....
  */
 public class Databasehandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;                // Database Version
@@ -37,7 +38,8 @@ public class Databasehandler extends SQLiteOpenHelper {
                 "NAME TEXT," +
                 "DESCRIPTION TEXT," +
                 "NFCTAGID TEXT," +
-                "LIST INTEGER)";
+                "LIST INTEGER," +
+                "CHECKED INTEGER)";
         db.execSQL(CREATE_LIST_TABLE);
         db.execSQL(CREATE_ITEM_TABLE);
 
@@ -67,6 +69,7 @@ public class Databasehandler extends SQLiteOpenHelper {
         values.put("DESCRIPTION", description);
         values.put("NFCTAGID", nfcId);
         values.put("LIST", listId);
+        values.put("CHECKED", 0);
         db.insert(TABLE_ITEMS, null, values);
         db.close();
     }
@@ -115,7 +118,7 @@ public class Databasehandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                ItemMetaData toAddList = new ItemMetaData(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getInt(4));
+                ItemMetaData toAddList = new ItemMetaData(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getInt(5));
                 items.add(toAddList);
             } while (cursor.moveToNext());
         }
@@ -123,9 +126,28 @@ public class Databasehandler extends SQLiteOpenHelper {
 
     }
 
+    public void CheckItem(String nfcTagId, int listid) {
+        String updateQuery = "UPDATE " + TABLE_ITEMS + " SET CHECKED=1 WHERE NFCTAGID='" + nfcTagId + "' AND LIST="+listid;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(updateQuery);
+    }
+
+    public void UnCheckAll (int listid) {
+        String updateQuery = "UPDATE " +TABLE_ITEMS + " SET CHECKED=0 WHERE LIST=" + listid;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(updateQuery);
+    }
+
     public void DeleteLists() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP IF EXISTS " + TABLE_LIST + ";");
+        db.execSQL("delete from " + TABLE_ITEMS);
+        db.execSQL("delete from " + TABLE_LIST);
+        db.execSQL("vacuum");
+    }
+
+    public void DeleteItems(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_ITEMS + " WHERE LIST=" + id);
     }
 
 

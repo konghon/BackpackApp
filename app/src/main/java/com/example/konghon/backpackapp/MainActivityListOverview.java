@@ -63,6 +63,9 @@ public class MainActivityListOverview extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -93,11 +96,10 @@ public class MainActivityListOverview extends Activity {
             Context context = getApplicationContext();
             CharSequence text = "Restoring lists";
             int duration = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-            /*databasehandler.addNewList("lol", "nyancat");
-            databasehandler.addNewItem("testobject", "een item", "NFCID", 5);*/
+            //still needs implementation
+
             return true;
         }
 
@@ -105,13 +107,10 @@ public class MainActivityListOverview extends Activity {
             Context context = getApplicationContext();
             CharSequence text = "Removing lists";
             int duration = Toast.LENGTH_SHORT;
-           // Intent i = new Intent(this, CheckList.class);
-            //startActivity(i);
-            //databasehandler.DeleteLists();
+            databasehandler.DeleteLists();
             UpdateList();
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-
             return true;
         }
 
