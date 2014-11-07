@@ -81,7 +81,7 @@ public class MainActivityListOverview extends Activity {
             return true;
         }
 
-        if (id == R.id.action_backup) {
+        /*if (id == R.id.action_backup) {
             Context context = getApplicationContext();
             CharSequence text = "Backing Up";
             int duration = Toast.LENGTH_SHORT;
@@ -90,9 +90,9 @@ public class MainActivityListOverview extends Activity {
             toast.show();
             //databasehandler.dumpToLogCat();
             return true;
-        }
+        }*/
 
-        if (id == R.id.action_restore) {
+        /*if (id == R.id.action_restore) {
             Context context = getApplicationContext();
             CharSequence text = "Restoring lists";
             int duration = Toast.LENGTH_SHORT;
@@ -101,7 +101,7 @@ public class MainActivityListOverview extends Activity {
             //still needs implementation
 
             return true;
-        }
+        }*/
 
         if (id == R.id.action_remove_list) {
             Context context = getApplicationContext();

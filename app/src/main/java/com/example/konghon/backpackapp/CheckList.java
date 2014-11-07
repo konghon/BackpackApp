@@ -68,6 +68,14 @@ public class CheckList extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        // disabling foreground dispatch:
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
