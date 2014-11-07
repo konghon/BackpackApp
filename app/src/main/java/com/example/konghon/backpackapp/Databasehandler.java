@@ -150,5 +150,11 @@ public class Databasehandler extends SQLiteOpenHelper {
         db.execSQL("delete from " + TABLE_ITEMS + " WHERE LIST=" + id);
     }
 
+    public void DeleteSpecificItem(int listId, String nfcTagId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_ITEMS + " WHERE LIST=" + listId + " AND NFCTAGID='" + nfcTagId + "';");
+    }
+
 
 }

@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class CheckList extends Activity {
     private Databasehandler databasehandler;
     public final static String EXTRA_ID = "com.example.konghon.backpackapp";
     private int listid = 0;
+    private boolean deleteMode = false;
 
     private final String[][] techList = new String[][]{
             new String[]{
@@ -87,8 +89,6 @@ public class CheckList extends Activity {
         if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
             databasehandler.CheckItem(ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)), listid);
             UpdateList2(listid);
-            //((TextView) findViewById(R.id.textViewTagId)).setText(
-            //     ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
         }
     }
 
@@ -124,8 +124,16 @@ public class CheckList extends Activity {
         }
 
         if (id == R.id.action_remove_item) {
-            //Needs to be implemented
-            databasehandler.DeleteItems(listid);
+            //sets remove bool
+            Log.d("dbugthing", Boolean.toString(deleteMode));
+            if (deleteMode == false) {
+                deleteMode = true;
+                ((TextView) findViewById(R.id.textViewItems)).setText("Deleting");
+                Log.d("dbugthing", Boolean.toString(deleteMode));
+            } else {
+                deleteMode = false;
+                ((TextView) findViewById(R.id.textViewItems)).setText("Items");
+            }
             UpdateList2(listid);
             return true;
         }
@@ -133,10 +141,23 @@ public class CheckList extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void UpdateList2(int id) {
+    public void UpdateList2(final int id) {
         ListView listView2 = (ListView) findViewById(R.id.listView2);
         final List<String> items = new ArrayList<String>();
         final List<ItemMetaData> dataItems = databasehandler.getItems(id);
+        //deletes item selected
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+                if (deleteMode == true) {
+                    databasehandler.DeleteSpecificItem(id, dataItems.get(i).NfcIDTag);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), dataItems.get(i).NfcIDTag, Toast.LENGTH_SHORT);
+                    toast.show();
+                }UpdateList2(listid);
+            }
+        });
+        //add the items to the list
         for (int i = 0; i < dataItems.size(); i++) {
             if (dataItems.get(i).Checked == 0) {
                 items.add(dataItems.get(i).Name + " |Not Checked");
@@ -148,13 +169,7 @@ public class CheckList extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, items);
 
-        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> av, View view, int i, long l) {
-                Toast toast = Toast.makeText(getApplicationContext(), dataItems.get(i).NfcIDTag, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+
         listView2.setAdapter(adapter);
     }
 
@@ -172,8 +187,6 @@ public class CheckList extends Activity {
         }
         return out;
     }
-
-
 
 
 }
